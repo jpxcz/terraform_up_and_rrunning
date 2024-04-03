@@ -3,12 +3,9 @@ provider "aws" {
 }
 
 module "users" {
-    source = "../../../modules/landing-zone/iam-user"
-    count = length(var.user_names)
-    user_name = var.user_names[count.index]
+  source    = "../../../modules/landing-zone/iam-user"
+    
+  for_each  = toset(var.user_names)
+  user_name = each.value
 }
 
-# resource "aws_iam_user" "example" {
-#   count = length(var.user_names)
-#   name  = var.user_names[count.index]
-# }

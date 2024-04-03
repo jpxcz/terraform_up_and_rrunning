@@ -1,5 +1,12 @@
 provider "aws" {
   region = "us-west-2"
+
+  default_tags {
+    tags = {
+      Owner     = "team-foo"
+      ManagedBy = "terraform"
+    }
+  }
 }
 
 module "webserver_cluster" {
