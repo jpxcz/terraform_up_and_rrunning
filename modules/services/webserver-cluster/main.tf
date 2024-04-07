@@ -75,7 +75,7 @@ resource "aws_launch_configuration" "example" {
 }
 
 resource "aws_autoscaling_group" "example" {
-  name = "${var.cluster_name}-${aws_launch_configuration.example.name}"
+  name = var.cluster_name
 
   launch_configuration = aws_launch_configuration.example.name
   vpc_zone_identifier  = data.aws_subnets.default.ids
@@ -87,8 +87,11 @@ resource "aws_autoscaling_group" "example" {
 
   min_elb_capacity = 2
 
-  lifecycle {
-    create_before_destroy = true
+  instance_refresh {
+    strategy = "Rolling"
+    preferences {
+      min_healthy_percentage = 50
+    }
   }
 
   tag {
