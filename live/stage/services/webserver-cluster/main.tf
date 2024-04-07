@@ -15,6 +15,8 @@ module "webserver_cluster" {
   cluster_name           = "webservers-stage"
   db_remote_state_bucket = "jflores-terraform-up-and-running-state"
   db_remote_state_key    = "stage/data-storage/mysql/terraform.tfstate"
+
+  enable_autoscaling = false 
 }
 
 resource "aws_security_group_rule" "allow_testing_inbound" {
